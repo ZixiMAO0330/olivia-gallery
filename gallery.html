@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Gallery | Olivia MAO Photography</title>
+    <meta name="description" content="Photography gallery by Olivia MAO.">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body class="gallery-page">
+    <div class="gallery-nav">
+      <a href="index.html" class="back-home">← Home</a>
+      <p class="gallery-logo">Olivia MAO</p>
+    </div>
+
+    <div class="gallery-header">
+      <p class="gallery-label">PHOTOGRAPHY</p>
+      <h1 id="gallery-title">Gallery</h1>
+      <p id="gallery-description">A collection of photographs.</p>
+    </div>
+
+    <div class="photo-grid" id="photo-grid"></div>
+
+    <div class="gallery-bottom">
+      <a href="index.html">← Back to home</a>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const album = params.get("album");
+
+      const galleries = {
+        china: {
+          title: "China",
+          description: "Landscapes, cities and quiet moments from home.",
+          folder: "images/gallery/China/",
+          photos: [
+            "photo01.jpg",
+            "photo02.jpg",
+            "photo03.jpg",
+            "photo04.JPG",
+            "photo05.JPG",
+            "photo06.JPG"
+          ]
+        },
+
+        japon: {
+          title: "Japon",
+          description: "Streets, details and memories collected across Japan.",
+          folder: "images/gallery/Japon/",
+          photos: [
+            "photo01.JPG",
+            "photo02.JPG",
+            "photo03.JPG",
+            "DSC01385_副本.JPG",
+            "photo05.JPG",
+            "photo06.JPG",
+            "photo07.jpg"
+          ]
+        },
+
+        europe: {
+          title: "Europe",
+          description: "Light, architecture and everyday scenes across Europe.",
+          folder: "images/gallery/Europe/",
+          photos: [
+            "photo01.jpg",
+            "photo02.jpg",
+            "photo03.jpg"
+          ]
+        }
+      };
+
+      const galleryTitle = document.querySelector("#gallery-title");
+      const galleryDescription = document.querySelector("#gallery-description");
+      const photoGrid = document.querySelector("#photo-grid");
+      const currentGallery = galleries[album];
+
+      if (currentGallery) {
+        galleryTitle.textContent = currentGallery.title;
+        galleryDescription.textContent = currentGallery.description;
+        document.title = currentGallery.title + " | Olivia MAO Photography";
+
+        currentGallery.photos.forEach(function(photo) {
+          const photoItem = document.createElement("div");
+          const image = document.createElement("img");
+
+          photoItem.classList.add("photo-item");
+          image.src = currentGallery.folder + photo;
+          image.alt = currentGallery.title + " photography by Olivia MAO";
+
+          photoItem.appendChild(image);
+          photoGrid.appendChild(photoItem);
+        });
+      } else {
+        galleryTitle.textContent = "Gallery";
+        galleryDescription.textContent = "Please choose a collection from the homepage.";
+        photoGrid.innerHTML = '<a href="index.html" class="gallery-error-link">Return to homepage</a>';
+      }
+    </script>
+  </body>
+</html>
